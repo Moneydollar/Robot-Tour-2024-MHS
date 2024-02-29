@@ -89,8 +89,8 @@ void right(int speed, unsigned long duration) {
 
 float calculateTime(unsigned long distance){ // Distance in Meters 
 
-float time = SPEED/distance;
-return time;
+  float time = SPEED/distance;
+  return time;
 
 }
 void loop() {
