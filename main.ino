@@ -12,8 +12,9 @@ int in4 = 5;
 
 bool isProgramEnded = false;
 
-enum State {STOP, FORWARD, BACKWARD, LEFT, RIGHT};
-State state = STOP;
+enum State {READY, STOP, FORWARD, BACKWARD, LEFT, RIGHT};
+State state = READY;
+float SPEED = 1.0; // In meters per second 
 
 void setup() {
   // Set all the motor control pins to outputs
@@ -86,6 +87,12 @@ void right(int speed, unsigned long duration) {
   state = RIGHT; // update state
 }
 
+float calculateTime(unsigned long distance){ // Distance in Meters 
+
+float time = SPEED/distance;
+return time;
+
+}
 void loop() {
 
   /*Assume Robot Speed is 1m/s 
@@ -93,10 +100,12 @@ void loop() {
 
 
   */
-  if (state == STOP) {
-    forward(255, 1000); // move forward at maximum speed for 1 second
-  } else if (state == FORWARD) {
-    stop(); // stop the robot
-    delay(1000); // wait for 1 second before the next loop iteration
+  if (state == READY) {
+    forward(255, calculateTime(2.3)); // move forward at maximum speed for 1 second
+
+
+  } else if (state == STOP) {
+    stop(); // stop the robot iteration
+    delay(99999999); // wait for 1 second before the next loop 
   }
 }
