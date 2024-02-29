@@ -1,0 +1,110 @@
+\documentclass{article} % This line specifies the type of document you're creating, an article in this case.
+\usepackage[utf8]{inputenc} % This package allows input of utf8 characters.
+\usepackage{amsmath} % This package is for math formatting.
+
+\title{Robot Tour 2024 Documentation} % Title of your document.
+\author{Cash Coffman} % Your name as the author.
+\date{\today} % This will automatically add today's date.
+
+\begin{document}
+
+\maketitle % This command creates the title section.
+
+\section{Introduction} % Creates a section titled Introduction.
+In this event we need to make the robot go through a unknown maze. We will need to calculate the distance of each strech of the maze so we can calculate how long the bot needs to stay in a state
+\section{The Speed Formula and Calculating State time} % Creates a section for the speed formula.
+The formula for calculating speed is given by:
+\begin{equation} % This environment allows you to display equations.
+    speed = \frac{distance}{time}
+\end{equation}
+
+\begin{itemize} % This creates a bulleted list.
+    \item \textbf{speed} is how fast an object is moving.
+    \item \textbf{distance} is how far the object has traveled.
+    \item \textbf{time} is the amount of time it took for the object to travel the distance.
+\end{itemize}
+We can use this formula to derive the time the motors need to spin to go a set distance if we know the robots speed
+
+\begin{equation}
+    1.0m/s = \frac{distance}{time}
+\end{equation}
+
+
+From this we can conclude that:
+
+\begin{equation}
+    time = \frac{speed}{distance}
+\end{equation}
+\linebreak
+
+\section{Function Documentation for Robot Movement Commands}
+
+\subsection*{Backward Function}
+This function is responsible for moving the robot in the backward direction.
+\begin{verbatim}
+void backward(int speed, unsigned long duration)
+\end{verbatim}
+\textbf{Parameters:}
+\begin{itemize}
+    \item \textbf{speed} - The speed at which the motors should run (0-255).
+    \item \textbf{duration} - The time in milliseconds the robot should move backward.
+\end{itemize}
+\textbf{Operation:} Sets the motors to rotate in the direction that moves the robot backward, then stops the movement after the specified duration.
+
+\subsection*{Left Function}
+This function turns the robot to the left.
+\begin{verbatim}
+void left(int speed, unsigned long duration)
+\end{verbatim}
+\textbf{Parameters:}
+\begin{itemize}
+    \item \textbf{speed} - The speed at which the motors should run (0-255).
+    \item \textbf{duration} - The time in milliseconds the robot should turn left.
+\end{itemize}
+\textbf{Operation:} Adjusts the motor speeds to turn the robot left, then stops the movement after the specified duration.
+
+\subsection*{Right Function}
+This function turns the robot to the right.
+\begin{verbatim}
+void right(int speed, unsigned long duration)
+\end{verbatim}
+\textbf{Parameters:}
+\begin{itemize}
+    \item \textbf{speed} - The speed at which the motors should run (0-255).
+    \item \textbf{duration} - The time in milliseconds the robot should turn right.
+\end{itemize}
+\textbf{Operation:} Adjusts the motor speeds to turn the robot right, then stops the movement after the specified duration.
+
+\subsection*{Stop Function}
+This function halts any movement by stopping both motors.
+\begin{verbatim}
+void stop()
+\end{verbatim}
+\textbf{Operation:} Sets all motor control pins to LOW, effectively stopping the robot and ceasing any further movement. It also sets the speed to 0 by writing a 0 PWM signal to the enable pins for both motors.
+
+\subsection*{Forward Function}
+This function propels the robot forward.
+\begin{verbatim}
+void forward(int speed, unsigned long duration)
+\end{verbatim}
+\textbf{Parameters:}
+\begin{itemize}
+    \item \textbf{speed} - The speed at which the motors should run (0-255).
+    \item \textbf{duration} - The time in milliseconds the robot should move forward.
+\end{itemize}
+\textbf{Operation:} Sets the motors to rotate in a manner that moves the robot forward, applying the specified speed. The robot continues moving forward for the duration specified before automatically calling the `stop` function to halt movement.
+
+\subsection*{Setup Function}
+This function initializes the robot's motors and serial communication.
+\begin{verbatim}
+void setup()
+\end{verbatim}
+\textbf{Operation:} Sets up the motor control pins as outputs and starts serial communication. This is where the robot's initial configuration is defined, and it runs once at the start of the program.
+
+\textbf{Note:} Each of these functions plays a critical role in the operational capabilities of the robot, allowing for precise control over its movements. By manipulating the parameters of these functions, the robot can be programmed to navigate through the maze efficiently.
+
+
+\section{Conclusion} % Creates a concluding section.
+So given the robot travels at SPEED; we can conclude that in order to calculate the time for each state, we will need to find the distance of each strech of the maze and plug it into the formula. 
+
+\end{document}
