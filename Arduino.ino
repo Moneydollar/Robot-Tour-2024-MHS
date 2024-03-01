@@ -14,7 +14,7 @@ bool isProgramEnded = false;
 
 enum State {READY, STOP, FORWARD, BACKWARD, LEFT, RIGHT};
 State state = READY;
-float SPEED = 1.0; // In meters per second 
+float SPEED = .70; // In meters per second 
 
 void setup() {
   // Set all the motor control pins to outputs
@@ -24,7 +24,7 @@ void setup() {
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
-  Serial.println('Setup Complete!');
+  // Serial.println('Setup Complete!');
 }
 
  /* Duration is in Milliseconds*/
@@ -87,25 +87,36 @@ void right(int speed, unsigned long duration) {
   state = RIGHT; // update state
 }
 
-float calculateTime(unsigned long distance){ // Distance in Meters 
-
-  float time = SPEED/distance;
-  return time;
-
+float calculateTime(float distance){ // Distance in Meters 
+  float time = distance / SPEED;
+  return time * 1000; // Convert to milliseconds since delay() expects milliseconds
 }
+
 void loop() {
 
-  /*Assume Robot Speed is 1m/s 
-    1 = 
+  /* Insert Instructions Here */
 
+ forward(255, calculateTime(.5));
+ delay(500);
+ left(255, 1000);
+ delay(500);
+ forward(255, calculateTime(.5));
+ delay(500);
+ left(255, 1000);
+ delay(500);
+ forward(255, calculateTime(.5));
+ delay(500);
+ left(255, 1000);
+ delay(500);
+ forward(255, calculateTime(.5));
+ delay(500);
+ left(255, 1000); 
+ 
+ state = STOP;
 
-  */
-  if (state == READY) {
-    forward(255, calculateTime(2.3)); // move forward at maximum speed for 1 second
+ if (state == STOP){
+  stop();
+  delay(99999999);
+ }
 
-
-  } else if (state == STOP) {
-    stop(); // stop the robot iteration
-    delay(99999999); // wait for 1 second before the next loop 
-  }
 }
