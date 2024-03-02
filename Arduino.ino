@@ -99,8 +99,7 @@ void right(int speed, unsigned long duration) {
 
 
 float pwmToSpeed(int pwmValue) {
-  // Placeholder conversion, replace with your own logic
-  // For example, assume linear relationship for simplicity (unlikely to be accurate)
+  
   float maxSpeedMetersPerSecond = 0.70; // Maximum speed in m/s corresponding to 255 PWM
   return (pwmValue / 255.0) * maxSpeedMetersPerSecond;
 }
@@ -115,8 +114,7 @@ float turningSpeed(float ModeSpeed) {
   } else if (ModeSpeed == HALF_SPEED) {
    return  825.0 ;  }
     else {
-    // Consider adding a default case if none of the above conditions are met
-    return 1000; // Default turn time or adjust as necessary
+    return 1000; 
   }
 }
 
@@ -124,7 +122,7 @@ float calculateTime(float distance, float speed){ // Distance in Meters
   speed = pwmToSpeed(speed);
   float time = distance / speed;
 
-  return time * 1000; // Convert to milliseconds since delay() expects milliseconds
+  return time * 1000; 
 }
 
 
