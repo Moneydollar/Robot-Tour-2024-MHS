@@ -14,7 +14,15 @@ bool isProgramEnded = false;
 
 enum State {READY, STOP, FORWARD, BACKWARD,  RIGHT, LEFT};
 State state = READY;
-float SPEED = .70; // In meters per second 
+float MAX_SPEED = 255; // Maximum PWM for full speed
+float THREE_FOURTH_SPEED = MAX_SPEED * 0.75;
+float HALF_SPEED = MAX_SPEED * 0.5;
+float QUARTER_SPEED = MAX_SPEED * 0.25;
+
+
+float speedMODE = MAX_SPEED;
+
+float turnTime = 1000; // in milliseconds
 
 void setup() {
   // Set all the motor control pins to outputs
@@ -89,84 +97,84 @@ void right(int speed, unsigned long duration) {
   state = RIGHT; // update state
 }
 
-/**
- * Calculates the time taken to travel a given distance.
- *
- * @param distance The distance to be traveled in meters.
- * @return The time taken to travel the distance in seconds.
- */
 
-float calculateTime(float distance){ // Distance in Meters 
-  float time = distance / SPEED;
+float pwmToSpeed(int pwmValue) {
+  // Placeholder conversion, replace with your own logic
+  // For example, assume linear relationship for simplicity (unlikely to be accurate)
+  float maxSpeedMetersPerSecond = 0.70; // Maximum speed in m/s corresponding to 255 PWM
+  return (pwmValue / 255.0) * maxSpeedMetersPerSecond;
+}
+
+
+float turningSpeed(float ModeSpeed) {
+  // Assuming ModeSpeed is the current speed mode (e.g., speedMODE)
+  if (ModeSpeed == MAX_SPEED) {
+    return  375.0 ;
+  } else if (ModeSpeed == THREE_FOURTH_SPEED) {
+     return  460.0 ;
+  } else if (ModeSpeed == HALF_SPEED) {
+   return  825.0 ;  }
+    else {
+    // Consider adding a default case if none of the above conditions are met
+    return 1000; // Default turn time or adjust as necessary
+  }
+}
+
+float calculateTime(float distance, float speed){ // Distance in Meters 
+  speed = pwmToSpeed(speed);
+  float time = distance / speed;
+
   return time * 1000; // Convert to milliseconds since delay() expects milliseconds
 }
 
-float calculateSpeed(float time){
-  // float travelSpeed = 
-  return false;
-
-}
-
-void loop() {
 
   /* Insert Instructions Here */
-  /*375 ms is proper time for turn*/
 
-//  forward(255, calculateTime(.5));
-//  delay(500);
-//  right(255, 375);
-//  delay(500);
-//  forward(255, calculateTime(.5));
-//  delay(500);
-//  right(255, 375);
-//  delay(500);
-//  forward(255, calculateTime(.5));
-//  delay(500);
-//  right(255, 375);
-//  delay(500);
-//  forward(255, calculateTime(.5));
-//  delay(500);
-//  right(255, 375); 
- 
-  forward(255, calculateTime(.25));
+  /*375 ms is proper time for turn (Tested on max speed)*/
+  /* 460 ms is proper duration for turn on 3/4 speed */
+  /* 825 ms is proper duration for turn on half speed */
+
+  /* 1Speed mode can be changed globally and per instruction */
+
+void loop() {
+  // First movement with dynamic speed
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  left(255, 375);
+  left(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.25));
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  right(255, 375);
+  right(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.25));
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  right(255, 375);
+  right(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.25));
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  left(255, 375);
+  left(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.60));
+  forward(speedMODE, calculateTime(.60, speedMODE));
   delay(100);
-  left(255, 375);
+  left(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.25));
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  right(255, 375);
+  right(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.25));
+  forward(speedMODE, calculateTime(.25, speedMODE));
   delay(100);
-  right(255, 375);
+  right(speedMODE, turningSpeed(speedMODE));
   delay(100);
-  forward(255, calculateTime(.35));
+  forward(speedMODE, calculateTime(.35, speedMODE));
 
 
-
-
-
- state = STOP;
-
- if (state == STOP){
   stop();
-  delay(99999999);
- }
 
+  if (state == STOP) {
+    stop();
+    delay(99999999); // Effectively halts the program
+  }
 }
+
+
