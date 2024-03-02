@@ -12,7 +12,7 @@ int in4 = 5;
 
 bool isProgramEnded = false;
 
-enum State {READY, STOP, FORWARD, BACKWARD, LEFT, RIGHT};
+enum State {READY, STOP, FORWARD, BACKWARD,  RIGHT, LEFT};
 State state = READY;
 float SPEED = .70; // In meters per second 
 
@@ -63,19 +63,8 @@ void backward(int speed, unsigned long duration) {
   state = BACKWARD; // update state
 }
 
-void left(int speed, unsigned long duration) {
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
-  analogWrite(enA, speed);
-  analogWrite(enB, speed);
-  delay(duration);
-  stop();
-  state = LEFT; // update state
-}
 
-void right(int speed, unsigned long duration) {
+void left(int speed, unsigned long duration) {
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
@@ -84,34 +73,95 @@ void right(int speed, unsigned long duration) {
   analogWrite(enB, speed);
   delay(duration);
   stop();
+  state = LEFT; // update state
+}
+
+
+void right(int speed, unsigned long duration) {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(enA, speed);
+  analogWrite(enB, speed);
+  delay(duration);
+  stop();
   state = RIGHT; // update state
 }
+
+/**
+ * Calculates the time taken to travel a given distance.
+ *
+ * @param distance The distance to be traveled in meters.
+ * @return The time taken to travel the distance in seconds.
+ */
 
 float calculateTime(float distance){ // Distance in Meters 
   float time = distance / SPEED;
   return time * 1000; // Convert to milliseconds since delay() expects milliseconds
 }
 
+float calculateSpeed(float time){
+  // float travelSpeed = 
+  return false;
+
+}
+
 void loop() {
 
   /* Insert Instructions Here */
+  /*375 ms is proper time for turn*/
 
- forward(255, calculateTime(.5));
- delay(500);
- left(255, 1000);
- delay(500);
- forward(255, calculateTime(.5));
- delay(500);
- left(255, 1000);
- delay(500);
- forward(255, calculateTime(.5));
- delay(500);
- left(255, 1000);
- delay(500);
- forward(255, calculateTime(.5));
- delay(500);
- left(255, 1000); 
+//  forward(255, calculateTime(.5));
+//  delay(500);
+//  right(255, 375);
+//  delay(500);
+//  forward(255, calculateTime(.5));
+//  delay(500);
+//  right(255, 375);
+//  delay(500);
+//  forward(255, calculateTime(.5));
+//  delay(500);
+//  right(255, 375);
+//  delay(500);
+//  forward(255, calculateTime(.5));
+//  delay(500);
+//  right(255, 375); 
  
+  forward(255, calculateTime(.25));
+  delay(100);
+  left(255, 375);
+  delay(100);
+  forward(255, calculateTime(.25));
+  delay(100);
+  right(255, 375);
+  delay(100);
+  forward(255, calculateTime(.25));
+  delay(100);
+  right(255, 375);
+  delay(100);
+  forward(255, calculateTime(.25));
+  delay(100);
+  left(255, 375);
+  delay(100);
+  forward(255, calculateTime(.60));
+  delay(100);
+  left(255, 375);
+  delay(100);
+  forward(255, calculateTime(.25));
+  delay(100);
+  right(255, 375);
+  delay(100);
+  forward(255, calculateTime(.25));
+  delay(100);
+  right(255, 375);
+  delay(100);
+  forward(255, calculateTime(.35));
+
+
+
+
+
  state = STOP;
 
  if (state == STOP){
