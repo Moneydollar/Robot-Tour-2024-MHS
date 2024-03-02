@@ -134,7 +134,7 @@ float calculateTime(float distance, float speed){ // Distance in Meters
   /* 460 ms is proper duration for turn on 3/4 speed */
   /* 825 ms is proper duration for turn on half speed */
 
-  /* 1Speed mode can be changed globally and per instruction */
+  /* Speed mode can be changed globally and per instruction */
 
 void loop() {
   // First movement with dynamic speed
